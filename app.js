@@ -31,10 +31,14 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 
+app.get('/beers/create', routes.beer_create);
+app.post('/beers/create', beer.create);
+
 app.get('/beers', beer.list);
 app.get('/beers/:id', beer.retrieve);
 app.put('/beers/:id', beer.update);
 app.delete('/beers/:id', beer.delete);
+
 
 
 http.createServer(app).listen(app.get('port'), function(){

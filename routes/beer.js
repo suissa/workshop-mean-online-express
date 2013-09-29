@@ -23,19 +23,23 @@ var Beer = mongoose.model('Beer', BeerSchema);
 
 exports.create = function(req, res){
   // CREATE
-  var dados = {
-    name: "Baden Baden - Chocolate",
-    description: "Tem gosto de chocolá",
-    type: "Stout"
-  };
+  var dados = req.body;
 
   var beer = new Beer(dados);
-
+  var query = {};
+  
   beer.save(function(err) {
     if(err){
       console.log(err);
     } else {
-      console.log('Cerveja cadastrada com sucesso');
+      Beer.find(query, function (err, beers) {
+        if(err) {
+          console.log('Houve algum erro, tente novamente', err);
+        } else {
+          // res.render('beer_list', {cervejas: beers, title: "Minhas cervejas"});
+          res.redirect('/beers');
+        }
+      });
     }
   });
 
@@ -105,6 +109,7 @@ exports.delete = function(req, res){
   var query = {};
 
   query = {_id: id};
+
   Beer.remove(query, function(err) {
     if(err) {
       console.log(err);

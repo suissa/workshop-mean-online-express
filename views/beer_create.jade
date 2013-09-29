@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method="post", action="")
+    label
+      input(type="text", name="name", placeholder="name")
+    label
+      input(type="text", name="type", placeholder="type")
+    label
+      textarea(name="description", placeholder="description")
+    //- input(type="hidden", name="_id", value=cerveja[0]['_id'])
+    input.btn.btn-salvar(type="submit", value="CRIAR")
