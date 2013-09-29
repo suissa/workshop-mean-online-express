@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+
+  h2 #{cerveja.name} - #{cerveja.type}
+  p= cerveja.description
+
+  form(method="post", action="")
+    label
+      input(type="text", name="name", placeholder="name", value=cerveja['name'])
+    label
+      input(type="text", name="type", placeholder="type", value=cerveja['type'])
+    label
+      textarea(name="description", placeholder="description")
+        =cerveja['description']
+    //- input(type="hidden", name="_id", value=cerveja[0]['_id'])
+    input(type="hidden", name="_method", value="put")
+    input.btn.btn-salvar(type="submit", value="SALVAR")
