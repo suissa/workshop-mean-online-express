@@ -69,7 +69,7 @@ exports.list = function(req, res){
     } else {
       res.render('beer_list', {cervejas: beers, title: "Minhas cervejas"});
     }
-  })
+  });
 }
 
 exports.update = function(req, res){
@@ -85,7 +85,7 @@ exports.update = function(req, res){
       console.log(err);
     } else {
       console.log('Cerveja atualizada com sucesso');
-      
+
       Beer.findOne(query, function (err, beer) {
         console.log('achou algo?');
         if(err) {
@@ -98,13 +98,25 @@ exports.update = function(req, res){
   });
 }
 
-exports.delete = function(req, res, id){
+exports.delete = function(req, res){
   // DELETE
-  Beer.remove({_id: id}, function(err) {
+
+  var id = req.params.id;
+  var query = {};
+
+  query = {_id: id};
+  Beer.remove(query, function(err) {
     if(err) {
       console.log(err);
     } else {
-      res.end('Cerveja deletada com sucesso!');
+      Beer.find(query, function (err, beers) {
+        if(err) {
+          console.log('Houve algum erro, tente novamente', err);
+        } else {
+          // res.render('beer_list', {cervejas: beers, title: "Minhas cervejas"});
+          res.redirect('/beers');
+        }
+      });
     }
   });
 }
